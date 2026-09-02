@@ -15,7 +15,6 @@ import {
   Send,
   ShieldCheck,
   Truck,
-  Wrench,
   X,
 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -44,11 +43,9 @@ function openWhatsApp(message: string) {
 function Logo() {
   return (
     <a href="#top" className="flex min-w-0 items-center gap-3" data-testid="link-logo">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#f5d84e]/60 bg-[#f5d84e] text-[#14181b]">
-        <Wrench size={20} strokeWidth={2.4} />
-      </span>
+      <img src="/client-work/logo-clean.png" alt="גרר יגאל — שירותי גרירת אופנועים" className="h-12 w-12 shrink-0 object-contain" />
       <span className="min-w-0 leading-none">
-        <strong className="block truncate text-[19px] font-black tracking-tight text-[#f5f3ec]">יגאל לוי</strong>
+        <strong className="block truncate text-[19px] font-black tracking-tight text-[#f5f3ec]">גרר יגאל</strong>
         <span className="mt-1 block truncate text-[10px] font-bold tracking-[.08em] text-[#a9adb0]">גרירת אופנועים וקטנועים 24/6</span>
       </span>
     </a>
@@ -289,11 +286,6 @@ function ClientWork() {
           </figure>
           <div className="grid gap-4 sm:grid-cols-2">
             <figure className="group relative min-h-[290px] overflow-hidden bg-[#272d30] sm:min-h-[300px]">
-              <img src="/client-work/logo.jpeg" alt="הלוגו של גרר יגאל — שירותי גרירת אופנועים" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
-              <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">המיתוג של יגאל <span className="mr-2 text-[#f5d84e]">/ גרר יגאל</span></figcaption>
-            </figure>
-            <figure className="group relative min-h-[290px] overflow-hidden bg-[#272d30] sm:min-h-[300px]">
               <img src="/client-work/kawasaki.jpeg" alt="אופנוע Kawasaki קשור על נגרר — עבודה מהשטח" loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
               <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">Kawasaki <span className="mr-2 text-[#f5d84e]">/ קשירה מאובטחת</span></figcaption>
@@ -388,7 +380,7 @@ function Footer() {
     <footer className="bg-[#101416] pb-24 pt-10 md:pb-10">
       <div className="container-wide flex flex-col justify-between gap-7 text-sm text-[#8f9698] md:flex-row md:items-end">
         <div><Logo /><p className="mt-5 text-xs text-[#687073]">גרירת אופנועים וקטנועים במרכז, בשרון ובשפלה.</p></div>
-        <div className="text-right md:text-left"><p className="text-xs text-[#687073]">זמינים 24/6 · עסק שומר שבת</p><a href={`tel:${phone}`} className="mt-1 block text-lg font-black text-[#f5f3ec]" data-testid="link-footer-phone">052-253-6758</a><p className="mt-3 text-[11px] text-[#687073]">© {new Date().getFullYear()} יגאל לוי</p></div>
+        <div className="text-right md:text-left"><p className="text-xs text-[#687073]">זמינים 24/6 · עסק שומר שבת</p><a href={`tel:${phone}`} className="mt-1 block text-lg font-black text-[#f5f3ec]" data-testid="link-footer-phone">052-253-6758</a><p className="mt-3 text-[11px] text-[#687073]">© {new Date().getFullYear()} גרר יגאל</p></div>
       </div>
     </footer>
   );
