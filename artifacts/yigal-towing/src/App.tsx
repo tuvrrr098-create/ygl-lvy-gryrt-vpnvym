@@ -61,7 +61,8 @@ function Header({ onMenu }: { onMenu: () => void }) {
       <div className="container-wide flex h-[70px] items-center justify-between gap-4">
         <Logo />
         <nav className="hidden items-center gap-7 text-[13px] font-semibold text-[#bfc3c3] lg:flex" aria-label="ניווט ראשי">
-          <a href="#services" className="transition-colors hover:text-[#f5d84e]" data-testid="link-services">השירותים</a>
+           <a href="#client-work" className="transition-colors hover:text-[#f5d84e]" data-testid="link-client-work">עבודות מהשטח</a>
+           <a href="#services" className="transition-colors hover:text-[#f5d84e]" data-testid="link-services">השירותים</a>
           <a href="#coverage" className="transition-colors hover:text-[#f5d84e]" data-testid="link-coverage">אזורי שירות</a>
           <a href="#faq" className="transition-colors hover:text-[#f5d84e]" data-testid="link-faq">שאלות נפוצות</a>
         </nav>
@@ -94,7 +95,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
       </div>
       <div className="mt-20 flex flex-col gap-2 text-right">
         {[
-          ['#services', 'השירותים'],
+           ['#client-work', 'עבודות מהשטח'],
+           ['#services', 'השירותים'],
           ['#coverage', 'אזורי שירות'],
           ['#values', 'למה יגאל'],
           ['#faq', 'שאלות נפוצות'],
@@ -267,25 +269,46 @@ function Values() {
   );
 }
 
-function Gallery() {
+function ClientWork() {
   return (
-    <section className="border-b border-[#d4d8d9]/15 bg-[#191e21] py-20 md:py-28">
+    <section id="client-work" className="border-b border-[#d4d8d9]/15 bg-[#191e21] py-20 md:py-28">
       <div className="container-wide">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-          <div><p className="flex items-center gap-3 text-[12px] font-black tracking-[.15em] text-[#f5d84e]"><span className="yellow-rule" /> איך זה נראה בדרך</p><h2 className="display mt-4 text-[clamp(3rem,7vw,5.8rem)] font-extrabold leading-[.85] tracking-[-.04em]">שומרים על<br /><span className="text-[#aeb3b4]">הכלי שלכם.</span></h2></div>
-          <p className="max-w-[270px] text-[12px] leading-6 text-[#8f9698]">תמונות המחשה אווירתיות. אינן תמונות מעבודותיו של יגאל.</p>
+          <div><p className="flex items-center gap-3 text-[12px] font-black tracking-[.15em] text-[#f5d84e]"><span className="yellow-rule" /> עבודות מהשטח</p><h2 className="display mt-4 text-[clamp(3rem,7vw,5.8rem)] font-extrabold leading-[.85] tracking-[-.04em]">הכלים<br /><span className="text-[#aeb3b4]">שהגיעו ליעד.</span></h2></div>
+          <p className="max-w-[310px] text-[13px] leading-6 text-[#aeb3b4]">תמונות וסרטון שסיפק יגאל — עבודות אמיתיות מהשטח, עם קשירה מסודרת ותשומת לב לכל כלי.</p>
         </div>
-        <div className="mt-12 grid gap-4 md:grid-cols-[1.35fr_.65fr]">
-          <figure className="group relative min-h-[390px] overflow-hidden bg-[#272d30] md:min-h-[500px]">
-            <img src="/gallery-secure.jpg" alt="קשירת אופנוע לגרירה — תמונת המחשה" className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-[1.03]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
-            <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">קשירה בטוחה ומסודרת <span className="mr-2 text-[#f5d84e]">/ תמונת המחשה</span></figcaption>
+        <div className="mt-12 grid gap-4 lg:grid-cols-[.82fr_1.18fr]">
+          <figure className="group relative min-h-[480px] overflow-hidden bg-[#0e1112] lg:min-h-[610px]">
+            <video controls playsInline preload="metadata" poster="/client-work/ducati-diavel.jpeg" className="h-full min-h-[480px] w-full object-cover lg:min-h-[610px]" aria-label="סרטון עבודת גרירת אופנוע מהשטח">
+              <source src="/client-work/towing-video.mp4" type="video/mp4" />
+              הדפדפן שלכם אינו תומך בניגון וידאו.
+            </video>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#14181b]/95 to-transparent px-5 pb-5 pt-16">
+              <figcaption className="text-sm font-bold text-[#f5f3ec]">סרטון מהשטח <span className="mr-2 text-[#f5d84e]">/ העמסה ושינוע בטוח</span></figcaption>
+            </div>
           </figure>
-          <figure className="group relative min-h-[390px] overflow-hidden bg-[#272d30] md:min-h-[500px]">
-            <img src="/gallery-scooter.jpg" alt="קטנוע על רכב גרירה — תמונת המחשה" className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-[1.03]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
-            <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">קטנוע בדרך ליעד <span className="mr-2 text-[#f5d84e]">/ תמונת המחשה</span></figcaption>
-          </figure>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <figure className="group relative min-h-[290px] overflow-hidden bg-[#272d30] sm:min-h-[300px]">
+              <img src="/client-work/logo.jpeg" alt="הלוגו של גרר יגאל — שירותי גרירת אופנועים" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">המיתוג של יגאל <span className="mr-2 text-[#f5d84e]">/ גרר יגאל</span></figcaption>
+            </figure>
+            <figure className="group relative min-h-[290px] overflow-hidden bg-[#272d30] sm:min-h-[300px]">
+              <img src="/client-work/kawasaki.jpeg" alt="אופנוע Kawasaki קשור על נגרר — עבודה מהשטח" loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">Kawasaki <span className="mr-2 text-[#f5d84e]">/ קשירה מאובטחת</span></figcaption>
+            </figure>
+            <figure className="group relative min-h-[290px] overflow-hidden bg-[#272d30] sm:min-h-[300px]">
+              <img src="/client-work/bmw-r1250.jpeg" alt="אופנוע BMW R1250 קשור על נגרר — עבודה מהשטח" loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">BMW R1250 <span className="mr-2 text-[#f5d84e]">/ בדרך ליעד</span></figcaption>
+            </figure>
+            <figure className="group relative min-h-[290px] overflow-hidden bg-[#272d30] sm:min-h-[300px]">
+              <img src="/client-work/ducati-diavel.jpeg" alt="אופנוע Ducati Diavel על נגרר — עבודה מהשטח" loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#14181b]/90 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-5 right-5 text-sm font-bold text-[#f5f3ec]">Ducati Diavel <span className="mr-2 text-[#f5d84e]">/ העמסה זהירה</span></figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -421,10 +444,10 @@ function Home() {
       <main className="bottom-safe">
         <Hero onLocate={requestLocation} />
         <QuickAction onLocate={requestLocation} />
+        <ClientWork />
         <Services />
         <Coverage />
         <Values />
-        <Gallery />
         <FAQ />
         <ClosingCTA onLocate={requestLocation} />
       </main>
