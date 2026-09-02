@@ -9,7 +9,6 @@ import {
   Crosshair,
   MapPin,
   Menu,
-  MessageCircle,
   Navigation,
   Phone,
   Route,
@@ -19,6 +18,7 @@ import {
   Wrench,
   X,
 } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -49,7 +49,7 @@ function Logo() {
       </span>
       <span className="min-w-0 leading-none">
         <strong className="block truncate text-[19px] font-black tracking-tight text-[#f5f3ec]">יגאל לוי</strong>
-        <span className="mt-1 block truncate text-[10px] font-bold tracking-[.08em] text-[#a9adb0]">גרירת אופנועים וקטנועים 24/7</span>
+        <span className="mt-1 block truncate text-[10px] font-bold tracking-[.08em] text-[#a9adb0]">גרירת אופנועים וקטנועים 24/6</span>
       </span>
     </a>
   );
@@ -68,7 +68,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
         <div className="flex items-center gap-2">
           <span className="hidden items-center gap-2 rounded-full border border-[#f5d84e]/30 bg-[#f5d84e]/10 px-3 py-2 text-[11px] font-bold text-[#f5d84e] sm:flex" data-testid="status-availability">
             <span className="h-2 w-2 rounded-full bg-[#f5d84e] shadow-[0_0_0_3px_rgba(245,216,78,.12)]" />
-            זמין עכשיו · 24/7
+            זמין עכשיו · 24/6 · עסק שומר שבת
           </span>
           <a href={`tel:${phone}`} className="hidden h-10 items-center gap-2 border border-[#d4d8d9]/25 px-3 text-sm font-bold text-[#f5f3ec] transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e] sm:flex" data-testid="link-header-phone">
             <Phone size={16} />
@@ -106,7 +106,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
       </div>
       <div className="mt-10 grid grid-cols-2 gap-3">
         <a href={`tel:${phone}`} className="flex h-14 items-center justify-center gap-2 bg-[#f5d84e] font-black text-[#14181b]" data-testid="link-mobile-phone"><Phone size={18} /> חייגו עכשיו</a>
-        <button type="button" onClick={() => openWhatsApp(quickMessage)} className="flex h-14 items-center justify-center gap-2 border border-[#f5d84e] font-black text-[#f5d84e]" data-testid="button-mobile-whatsapp"><MessageCircle size={18} /> WhatsApp</button>
+        <button type="button" onClick={() => openWhatsApp(quickMessage)} className="flex h-14 items-center justify-center gap-2 border border-[#f5d84e] font-black text-[#f5d84e]" data-testid="button-mobile-whatsapp"><FaWhatsapp size={22} /> WhatsApp</button>
       </div>
     </div>
   );
@@ -144,7 +144,7 @@ function Hero({ onLocate }: { onLocate: () => void }) {
           <div className="mt-12 flex flex-wrap gap-x-7 gap-y-3 text-[12px] font-semibold text-[#b9bdbe]">
             <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> קשר ישיר עם יגאל</span>
             <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> תיאום ברור</span>
-            <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> זמין 24/7</span>
+             <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> זמין 24/6 · עסק שומר שבת</span>
           </div>
         </div>
       </div>
@@ -175,7 +175,7 @@ function Services() {
   const services = [
     { number: '01', icon: Bike, title: 'גרירת אופנועים', copy: 'איסוף והעברה בטוחה של אופנועים, עם ציוד מתאים ותיאום ישיר לאורך הדרך.' },
     { number: '02', icon: Truck, title: 'גרירת קטנועים', copy: 'גרירה מסודרת לקטנועים מכל הסוגים — מהנקודה שבה נעצרתם ועד היעד שתבחרו.' },
-    { number: '03', icon: Clock3, title: 'שירות 24/7', copy: 'גם בלילה, בסוף שבוע או בחג. כשצריך עזרה בדרך, יש עם מי לדבר.' },
+    { number: '03', icon: Clock3, title: 'שירות 24/6', copy: 'זמינים 24 שעות ביממה, שישה ימים בשבוע. העסק שומר שבת.' },
   ];
   return (
     <section id="services" className="border-b border-[#d4d8d9]/15 bg-[#191e21] py-20 md:py-28">
@@ -294,7 +294,7 @@ function Gallery() {
 
 const faqs = [
   ['באילו אזורים אתם נותנים שירות?', 'השירות ניתן במרכז, בשרון ובשפלה. שלחו מיקום או דברו עם יגאל כדי לבדוק תיאום לנקודה המדויקת שלכם.'],
-  ['האם השירות זמין 24/7?', 'כן. אפשר ליצור קשר בכל שעה, כולל לילה, סופי שבוע וחגים.'],
+  ['האם השירות זמין 24/6?', 'כן. אפשר ליצור קשר 24 שעות ביממה, שישה ימים בשבוע. העסק שומר שבת.'],
   ['איך מזמינים גרירה?', 'הדרך המהירה היא ללחוץ על “שלחו מיקום ב-WhatsApp”. אפשר גם להתקשר ישירות ל-052-253-6758.'],
   ['האם אתם גוררים גם קטנועים?', 'כן. השירות כולל גרירת אופנועים וקטנועים.'],
   ['מה קורה אם אין לי אפשרות לשלוח מיקום?', 'אפשר לכתוב כתובת או נקודת ציון ידנית ב-WhatsApp, ויגאל יתאם את האיסוף מולכם.'],
@@ -365,7 +365,7 @@ function Footer() {
     <footer className="bg-[#101416] pb-24 pt-10 md:pb-10">
       <div className="container-wide flex flex-col justify-between gap-7 text-sm text-[#8f9698] md:flex-row md:items-end">
         <div><Logo /><p className="mt-5 text-xs text-[#687073]">גרירת אופנועים וקטנועים במרכז, בשרון ובשפלה.</p></div>
-        <div className="text-right md:text-left"><p className="text-xs text-[#687073]">זמינים 24/7</p><a href={`tel:${phone}`} className="mt-1 block text-lg font-black text-[#f5f3ec]" data-testid="link-footer-phone">052-253-6758</a><p className="mt-3 text-[11px] text-[#687073]">© {new Date().getFullYear()} יגאל לוי</p></div>
+        <div className="text-right md:text-left"><p className="text-xs text-[#687073]">זמינים 24/6 · עסק שומר שבת</p><a href={`tel:${phone}`} className="mt-1 block text-lg font-black text-[#f5f3ec]" data-testid="link-footer-phone">052-253-6758</a><p className="mt-3 text-[11px] text-[#687073]">© {new Date().getFullYear()} יגאל לוי</p></div>
       </div>
     </footer>
   );
@@ -387,8 +387,8 @@ function Home() {
   const [locationSheet, setLocationSheet] = useState(false);
 
   useEffect(() => {
-    document.title = 'יגאל לוי — גרירת אופנועים וקטנועים 24/7';
-    const description = 'גרירת אופנועים וקטנועים 24/7 במרכז, בשרון ובשפלה. שירות מקצועי, תיאום ברור וקשר ישיר עם יגאל לוי.';
+    document.title = 'יגאל לוי — גרירת אופנועים וקטנועים 24/6';
+    const description = 'גרירת אופנועים וקטנועים 24/6 במרכז, בשרון ובשפלה. עסק שומר שבת. שירות מקצועי, תיאום ברור וקשר ישיר עם יגאל לוי.';
     let tag = document.querySelector('meta[name="description"]');
     if (!tag) {
       tag = document.createElement('meta');
@@ -429,7 +429,7 @@ function Home() {
         <ClosingCTA onLocate={requestLocation} />
       </main>
       <Footer />
-      <a href={whatsappUrl(quickMessage)} target="_blank" rel="noreferrer" className="fixed bottom-24 left-4 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-[#102016] shadow-lg transition-transform hover:scale-105 md:bottom-6 md:left-6" aria-label="פתיחת WhatsApp" data-testid="link-floating-whatsapp"><MessageCircle size={25} strokeWidth={2.4} /></a>
+      <a href={whatsappUrl(quickMessage)} target="_blank" rel="noreferrer" className="floating-whatsapp fixed bottom-24 left-4 z-30 flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] text-[#102016] shadow-[0_10px_30px_rgba(37,211,102,.35)] ring-4 ring-[#25d366]/25 transition-transform hover:scale-110 md:bottom-6 md:left-6" aria-label="פתיחת WhatsApp" data-testid="link-floating-whatsapp"><FaWhatsapp size={34} /></a>
       <BottomBar onLocate={requestLocation} />
       {locationSheet && <LocationSheet onClose={() => setLocationSheet(false)} />}
     </div>

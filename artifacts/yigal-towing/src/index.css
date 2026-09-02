@@ -112,6 +112,11 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 }
 .region-map path { transition: fill .25s ease, stroke .25s ease; }
 .region-map path:hover { fill: rgba(245,216,78,.25); stroke: #f5d84e; }
+.floating-whatsapp { animation: whatsapp-pulse 2.4s ease-in-out infinite; }
+@keyframes whatsapp-pulse {
+  0%, 100% { box-shadow: 0 10px 30px rgba(37, 211, 102, .35), 0 0 0 0 rgba(37, 211, 102, .28); }
+  50% { box-shadow: 0 12px 34px rgba(37, 211, 102, .48), 0 0 0 9px rgba(37, 211, 102, 0); }
+}
 @media (max-width: 767px) {
   .container-wide { width: min(100% - 28px, 560px); }
   .bottom-safe { padding-bottom: 92px; }
@@ -119,4 +124,5 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { animation: none; }
+  .floating-whatsapp { animation: none; }
 }
