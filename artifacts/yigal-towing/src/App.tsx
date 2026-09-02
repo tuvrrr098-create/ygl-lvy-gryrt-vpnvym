@@ -7,8 +7,6 @@ import {
   CircleAlert,
   Clock3,
   Crosshair,
-  ChevronLeft,
-  ChevronRight,
   MapPin,
   Menu,
   Navigation,
@@ -113,87 +111,6 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   );
 }
 
-const bikeSlides = [
-  {
-    image: '/client-work/kawasaki.jpeg',
-    alt: 'אופנוע Kawasaki קשור על נגרר',
-    title: 'Kawasaki',
-    detail: 'קשירה מאובטחת',
-  },
-  {
-    image: '/client-work/bmw-r1250.jpeg',
-    alt: 'אופנוע BMW R1250 קשור על נגרר',
-    title: 'BMW R1250',
-    detail: 'בדרך ליעד',
-  },
-  {
-    image: '/client-work/ducati-diavel.jpeg',
-    alt: 'אופנוע Ducati Diavel על נגרר',
-    title: 'Ducati Diavel',
-    detail: 'העמסה זהירה',
-  },
-];
-
-function BikeCarousel() {
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % bikeSlides.length);
-    }, 4800);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const changeSlide = (direction: number) => {
-    setActiveSlide((current) => (current + direction + bikeSlides.length) % bikeSlides.length);
-  };
-
-  const slide = bikeSlides[activeSlide];
-
-  return (
-    <div className="relative overflow-hidden border border-[#f5f3ec]/25 bg-[#101416]/75 p-2 shadow-2xl shadow-black/30 backdrop-blur-sm" dir="ltr" data-testid="bike-carousel">
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#272d30]">
-        <img key={slide.image} src={slide.image} alt={slide.alt} className="h-full w-full animate-[reveal_.65s_cubic-bezier(.2,.75,.25,1)] object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#101416]/95 via-transparent to-[#101416]/10" />
-        <div className="absolute left-4 top-4 flex items-center gap-2 border border-[#f5d84e]/50 bg-[#14181b]/75 px-3 py-2 text-[11px] font-black tracking-[.12em] text-[#f5d84e] backdrop-blur-sm">
-          <span className="h-2 w-2 rounded-full bg-[#f5d84e]" />
-          עבודות מהשטח
-        </div>
-        <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4" dir="rtl">
-          <div>
-            <p className="text-2xl font-black text-[#f5f3ec] md:text-3xl">{slide.title}</p>
-            <p className="mt-1 text-sm font-bold text-[#f5d84e]">{slide.detail}</p>
-          </div>
-          <span className="font-mono text-sm font-bold text-[#f5f3ec]/75">{String(activeSlide + 1).padStart(2, '0')} / 03</span>
-        </div>
-        <button type="button" onClick={() => changeSlide(1)} className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center border border-[#f5f3ec]/40 bg-[#14181b]/65 text-[#f5f3ec] transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e]" aria-label="אופנוע הבא" data-testid="button-carousel-next">
-          <ChevronRight size={20} />
-        </button>
-        <button type="button" onClick={() => changeSlide(-1)} className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center border border-[#f5f3ec]/40 bg-[#14181b]/65 text-[#f5f3ec] transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e]" aria-label="אופנוע קודם" data-testid="button-carousel-previous">
-          <ChevronLeft size={20} />
-        </button>
-      </div>
-      <div className="flex items-center justify-between px-2 pb-1 pt-3" dir="rtl">
-        <p className="text-[11px] font-semibold text-[#9da3a5]">החליקו או בחרו אופנוע</p>
-        <div className="flex items-center gap-2" role="tablist" aria-label="בחירת אופנוע">
-          {bikeSlides.map((item, index) => (
-            <button
-              key={item.title}
-              type="button"
-              onClick={() => setActiveSlide(index)}
-              className={`h-2 transition-all ${activeSlide === index ? 'w-8 bg-[#f5d84e]' : 'w-2 bg-[#f5f3ec]/35 hover:bg-[#f5f3ec]/70'}`}
-              role="tab"
-              aria-selected={activeSlide === index}
-              aria-label={`הצגת ${item.title}`}
-              data-testid={`button-carousel-slide-${index}`}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Hero({ onLocate }: { onLocate: () => void }) {
   return (
     <section id="top" className="relative overflow-hidden border-b border-[#d4d8d9]/15 pt-[70px]">
@@ -211,11 +128,7 @@ function Hero({ onLocate }: { onLocate: () => void }) {
             <p className="mt-1 text-xs font-semibold text-[#aeb3b4]">זמין 24/6 · עסק שומר שבת</p>
           </div>
         </div>
-        <div className="grid items-center gap-9 lg:grid-cols-[.95fr_1.05fr] lg:gap-16">
-          <div className="order-1">
-            <BikeCarousel />
-          </div>
-          <div className="order-2">
+        <div className="max-w-[820px]">
             <div className="reveal mb-6 flex items-center gap-3 text-[12px] font-bold tracking-[.16em] text-[#f5d84e]">
               <span className="yellow-rule" />
               שירותי דרך לאופנועים וקטנועים
@@ -244,7 +157,6 @@ function Hero({ onLocate }: { onLocate: () => void }) {
             </div>
           </div>
         </div>
-      </div>
       <div className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 items-center gap-3 text-[10px] font-bold tracking-[.15em] text-[#9da3a5] md:flex">
         <span className="h-px w-12 bg-[#9da3a5]/40" /> גללו לפרטים <span className="h-px w-12 bg-[#9da3a5]/40" />
       </div>
