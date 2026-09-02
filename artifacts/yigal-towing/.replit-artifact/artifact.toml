@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "יגאל לוי — גרירת אופנועים"
+description = "אתר חירום mobile-first לשירות גרירת אופנועים וקטנועים 24/7 באזור המרכז, השרון והשפלה, עם חיוג ישיר, וואטסאפ ושיתוף מיקום חכם."
+version = "1.0.0"
+id = "artifacts/yigal-towing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25899
+
+[services.development]
+run = "pnpm --filter @workspace/yigal-towing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/yigal-towing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/yigal-towing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25899"
+BASE_PATH = "/"
