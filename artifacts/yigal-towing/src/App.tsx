@@ -7,6 +7,8 @@ import {
   CircleAlert,
   Clock3,
   Crosshair,
+  ChevronLeft,
+  ChevronRight,
   MapPin,
   Menu,
   Navigation,
@@ -111,39 +113,135 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   );
 }
 
+const bikeSlides = [
+  {
+    image: '/client-work/kawasaki.jpeg',
+    alt: 'אופנוע Kawasaki קשור על נגרר',
+    title: 'Kawasaki',
+    detail: 'קשירה מאובטחת',
+  },
+  {
+    image: '/client-work/bmw-r1250.jpeg',
+    alt: 'אופנוע BMW R1250 קשור על נגרר',
+    title: 'BMW R1250',
+    detail: 'בדרך ליעד',
+  },
+  {
+    image: '/client-work/ducati-diavel.jpeg',
+    alt: 'אופנוע Ducati Diavel על נגרר',
+    title: 'Ducati Diavel',
+    detail: 'העמסה זהירה',
+  },
+];
+
+function BikeCarousel() {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % bikeSlides.length);
+    }, 4800);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const changeSlide = (direction: number) => {
+    setActiveSlide((current) => (current + direction + bikeSlides.length) % bikeSlides.length);
+  };
+
+  const slide = bikeSlides[activeSlide];
+
+  return (
+    <div className="relative overflow-hidden border border-[#f5f3ec]/25 bg-[#101416]/75 p-2 shadow-2xl shadow-black/30 backdrop-blur-sm" dir="ltr" data-testid="bike-carousel">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#272d30]">
+        <img key={slide.image} src={slide.image} alt={slide.alt} className="h-full w-full animate-[reveal_.65s_cubic-bezier(.2,.75,.25,1)] object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101416]/95 via-transparent to-[#101416]/10" />
+        <div className="absolute left-4 top-4 flex items-center gap-2 border border-[#f5d84e]/50 bg-[#14181b]/75 px-3 py-2 text-[11px] font-black tracking-[.12em] text-[#f5d84e] backdrop-blur-sm">
+          <span className="h-2 w-2 rounded-full bg-[#f5d84e]" />
+          עבודות מהשטח
+        </div>
+        <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4" dir="rtl">
+          <div>
+            <p className="text-2xl font-black text-[#f5f3ec] md:text-3xl">{slide.title}</p>
+            <p className="mt-1 text-sm font-bold text-[#f5d84e]">{slide.detail}</p>
+          </div>
+          <span className="font-mono text-sm font-bold text-[#f5f3ec]/75">{String(activeSlide + 1).padStart(2, '0')} / 03</span>
+        </div>
+        <button type="button" onClick={() => changeSlide(1)} className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center border border-[#f5f3ec]/40 bg-[#14181b]/65 text-[#f5f3ec] transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e]" aria-label="אופנוע הבא" data-testid="button-carousel-next">
+          <ChevronRight size={20} />
+        </button>
+        <button type="button" onClick={() => changeSlide(-1)} className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center border border-[#f5f3ec]/40 bg-[#14181b]/65 text-[#f5f3ec] transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e]" aria-label="אופנוע קודם" data-testid="button-carousel-previous">
+          <ChevronLeft size={20} />
+        </button>
+      </div>
+      <div className="flex items-center justify-between px-2 pb-1 pt-3" dir="rtl">
+        <p className="text-[11px] font-semibold text-[#9da3a5]">החליקו או בחרו אופנוע</p>
+        <div className="flex items-center gap-2" role="tablist" aria-label="בחירת אופנוע">
+          {bikeSlides.map((item, index) => (
+            <button
+              key={item.title}
+              type="button"
+              onClick={() => setActiveSlide(index)}
+              className={`h-2 transition-all ${activeSlide === index ? 'w-8 bg-[#f5d84e]' : 'w-2 bg-[#f5f3ec]/35 hover:bg-[#f5f3ec]/70'}`}
+              role="tab"
+              aria-selected={activeSlide === index}
+              aria-label={`הצגת ${item.title}`}
+              data-testid={`button-carousel-slide-${index}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Hero({ onLocate }: { onLocate: () => void }) {
   return (
-    <section id="top" className="relative flex min-h-[720px] items-end overflow-hidden border-b border-[#d4d8d9]/15 pt-[70px] md:min-h-[800px]">
-      <img src="/hero-towing.jpg" alt="גרירת אופנוע — תמונת המחשה" className="absolute inset-0 h-full w-full object-cover object-center opacity-60" />
-      <div className="absolute inset-0 bg-[linear-gradient(270deg,rgba(20,24,27,.92)_5%,rgba(20,24,27,.66)_46%,rgba(20,24,27,.48)_100%)]" />
+    <section id="top" className="relative overflow-hidden border-b border-[#d4d8d9]/15 pt-[70px]">
+      <img src="/hero-towing.jpg" alt="גרירת אופנוע — תמונת המחשה" className="absolute inset-0 h-full w-full object-cover object-center opacity-25" />
+      <div className="absolute inset-0 bg-[linear-gradient(270deg,rgba(20,24,27,.98)_5%,rgba(20,24,27,.92)_46%,rgba(20,24,27,.78)_100%)]" />
       <div className="hero-grid absolute inset-0 opacity-40" />
-      <div className="relative z-10 container-wide w-full pb-20 pt-20 md:pb-28">
-        <div className="max-w-[760px]">
-          <div className="reveal mb-7 flex items-center gap-3 text-[12px] font-bold tracking-[.16em] text-[#f5d84e]">
-            <span className="yellow-rule" />
-            שירותי דרך לאופנועים וקטנועים
+      <div className="relative z-10 container-wide pb-12 pt-10 md:pb-20 md:pt-14">
+        <div className="reveal mb-10 flex items-center gap-5 border-b border-[#f5f3ec]/15 pb-6 md:mb-14 md:pb-8">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center border border-[#f5d84e]/70 bg-[#14181b]/80 p-1 shadow-[0_0_35px_rgba(245,216,78,.18)] md:h-28 md:w-28">
+            <img src="/client-work/logo-clean.png" alt="לוגו גרר יגאל" className="h-full w-full object-contain" />
           </div>
-          <h1 className="display reveal reveal-delay-1 max-w-[850px] text-[clamp(4rem,12vw,8.8rem)] font-extrabold leading-[.84] tracking-[-.045em] text-[#f5f3ec]">
-            נתקעתם עם<br /><span className="text-[#f5d84e]">האופנוע?</span>
-          </h1>
-          <p className="reveal reveal-delay-2 mt-8 max-w-[570px] text-[clamp(1.25rem,3vw,1.7rem)] font-bold leading-[1.35] text-[#e2e3de]">
-            שלחו מיקום.
-            <span className="mt-1 block text-base font-normal leading-relaxed text-[#b9bdbe] md:text-lg">יגאל לוי מגיע עם גרירה מקצועית, בתיאום ברור ובקשר ישיר — במרכז, בשרון ובשפלה.</span>
-          </p>
-          <div className="reveal reveal-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
-            <button type="button" onClick={onLocate} className="flex h-14 items-center justify-center gap-3 bg-[#f5d84e] px-7 text-[16px] font-black text-[#14181b] transition-transform hover:-translate-y-0.5 active:translate-y-0" data-testid="button-send-location">
-              <Navigation size={19} strokeWidth={2.5} />
-              שלחו מיקום ב-WhatsApp
-            </button>
-            <a href={`tel:${phone}`} className="flex h-14 items-center justify-center gap-3 border border-[#e7e8e4]/45 bg-[#14181b]/30 px-7 text-[16px] font-black text-[#f5f3ec] backdrop-blur-sm transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e]" data-testid="link-hero-phone">
-              <Phone size={18} />
-              052-253-6758
-            </a>
+          <div>
+            <p className="text-[clamp(2rem,5vw,4rem)] font-black leading-none tracking-[-.04em] text-[#f5f3ec]">גרר יגאל</p>
+            <p className="mt-2 text-[11px] font-bold tracking-[.18em] text-[#f5d84e] md:text-sm">שירותי גרירת אופנועים וקטנועים</p>
+            <p className="mt-1 text-xs font-semibold text-[#aeb3b4]">זמין 24/6 · עסק שומר שבת</p>
           </div>
-          <div className="mt-12 flex flex-wrap gap-x-7 gap-y-3 text-[12px] font-semibold text-[#b9bdbe]">
-            <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> קשר ישיר עם יגאל</span>
-            <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> תיאום ברור</span>
-             <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> זמין 24/6 · עסק שומר שבת</span>
+        </div>
+        <div className="grid items-center gap-9 lg:grid-cols-[.95fr_1.05fr] lg:gap-16">
+          <div className="order-1">
+            <BikeCarousel />
+          </div>
+          <div className="order-2">
+            <div className="reveal mb-6 flex items-center gap-3 text-[12px] font-bold tracking-[.16em] text-[#f5d84e]">
+              <span className="yellow-rule" />
+              שירותי דרך לאופנועים וקטנועים
+            </div>
+            <h1 className="display reveal reveal-delay-1 max-w-[760px] text-[clamp(3.7rem,9vw,7.7rem)] font-extrabold leading-[.84] tracking-[-.045em] text-[#f5f3ec]">
+              נתקעתם עם<br /><span className="text-[#f5d84e]">האופנוע?</span>
+            </h1>
+            <p className="reveal reveal-delay-2 mt-7 max-w-[570px] text-[clamp(1.2rem,2.5vw,1.6rem)] font-bold leading-[1.35] text-[#e2e3de]">
+              שלחו מיקום.
+              <span className="mt-1 block text-base font-normal leading-relaxed text-[#b9bdbe] md:text-lg">יגאל לוי מגיע עם גרירה מקצועית, בתיאום ברור ובקשר ישיר — במרכז, בשרון ובשפלה.</span>
+            </p>
+            <div className="reveal reveal-delay-3 mt-8 flex flex-col gap-3 sm:flex-row">
+              <button type="button" onClick={onLocate} className="flex h-14 items-center justify-center gap-3 bg-[#f5d84e] px-7 text-[16px] font-black text-[#14181b] transition-transform hover:-translate-y-0.5 active:translate-y-0" data-testid="button-send-location">
+                <Navigation size={19} strokeWidth={2.5} />
+                שלחו מיקום ב-WhatsApp
+              </button>
+              <a href={`tel:${phone}`} className="flex h-14 items-center justify-center gap-3 border border-[#e7e8e4]/45 bg-[#14181b]/30 px-7 text-[16px] font-black text-[#f5f3ec] backdrop-blur-sm transition-colors hover:border-[#f5d84e] hover:text-[#f5d84e]" data-testid="link-hero-phone">
+                <Phone size={18} />
+                052-253-6758
+              </a>
+            </div>
+            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-[12px] font-semibold text-[#b9bdbe]">
+              <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> קשר ישיר עם יגאל</span>
+              <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> תיאום ברור</span>
+              <span className="flex items-center gap-2"><Check size={15} className="text-[#f5d84e]" /> גרירה בטוחה</span>
+            </div>
           </div>
         </div>
       </div>
