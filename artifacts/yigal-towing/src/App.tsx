@@ -37,7 +37,7 @@ function whatsappUrl(message: string) {
 }
 
 function openWhatsApp(message: string) {
-  window.open(whatsappUrl(message), '_blank', 'noopener,noreferrer');
+  window.location.href = whatsappUrl(message);
 }
 
 function Logo() {
@@ -346,7 +346,7 @@ function FAQ() {
   );
 }
 
-function LocationSheet({ onClose }: { onClose: () => void }) {
+function LocationSheet({ onClose, locating }: { onClose: () => void; locating: boolean }) {
   const [address, setAddress] = useState('');
   const sendAddress = () => {
     const message = address.trim() ? `שלום יגאל, אני צריך/ה גרירה. הכתובת שלי: ${address.trim()}` : quickMessage;
@@ -357,7 +357,7 @@ function LocationSheet({ onClose }: { onClose: () => void }) {
     <div className="fixed inset-0 z-[60] flex items-end justify-center bg-[#090b0c]/75 p-3 backdrop-blur-sm sm:items-center" role="dialog" aria-modal="true" aria-labelledby="location-title">
       <div className="w-full max-w-[520px] border border-[#d4d8d9]/25 bg-[#1b2124] p-6 shadow-2xl sm:p-8" dir="rtl">
         <div className="flex items-start justify-between gap-4">
-          <div><span className="mb-4 flex h-10 w-10 items-center justify-center bg-[#f5d84e] text-[#14181b]"><MapPin size={20} /></span><h2 id="location-title" className="text-2xl font-black text-[#f5f3ec]">לא הצלחנו לקבל מיקום</h2><p className="mt-2 text-sm leading-6 text-[#aeb3b4]">אפשר לכתוב כתובת או נקודת ציון, ויגאל יחזור אליכם ב-WhatsApp.</p></div>
+          <div><span className="mb-4 flex h-10 w-10 items-center justify-center bg-[#f5d84e] text-[#14181b]"><MapPin size={20} /></span><h2 id="location-title" className="text-2xl font-black text-[#f5f3ec]">{locating ? 'מאתרים את המיקום שלכם…' : 'לא הצלחנו לקבל מיקום'}</h2><p className="mt-2 text-sm leading-6 text-[#aeb3b4]">{locating ? 'אשרו את בקשת המיקום בדפדפן. אפשר גם לכתוב כתובת ולשלוח עכשיו.' : 'אפשר לכתוב כתובת או נקודת ציון, ויגאל יחזור אליכם ב-WhatsApp.'}</p></div>
           <button type="button" onClick={onClose} className="text-[#aeb3b4] hover:text-[#f5f3ec]" aria-label="סגירה" data-testid="button-close-location"><X size={22} /></button>
         </div>
         <label htmlFor="address" className="mt-7 block text-sm font-bold text-[#f5f3ec]">כתובת או נקודת ציון <span className="font-normal text-[#8e9597]">(אפשר לדלג)</span></label>
@@ -410,6 +410,7 @@ function BottomBar({ onLocate }: { onLocate: () => void }) {
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locationSheet, setLocationSheet] = useState(false);
+  const [locating, setLocating] = useState(false);
 
   useEffect(() => {
     document.title = 'יגאל לוי — גרירת אופנועים וקטנועים 24/6';
@@ -424,18 +425,36 @@ function Home() {
   }, []);
 
   const requestLocation = () => {
+    setLocationSheet(true);
     if (!navigator.geolocation) {
-      setLocationSheet(true);
+      setLocating(false);
       return;
     }
+    setLocating(true);
+    let settled = false;
+    const stop = window.setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      setLocating(false);
+    }, 7000);
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(stop);
+        setLocating(false);
+        setLocationSheet(false);
         const { latitude, longitude } = position.coords;
         const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
         openWhatsApp(`שלום יגאל, נתקעתי עם האופנוע/קטנוע. זה המיקום שלי: ${mapsLink}`);
       },
-      () => setLocationSheet(true),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
+      () => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(stop);
+        setLocating(false);
+      },
+      { enableHighAccuracy: true, timeout: 6000, maximumAge: 60000 },
     );
   };
 
@@ -456,7 +475,7 @@ function Home() {
       <Footer />
       <a href={whatsappUrl(quickMessage)} target="_blank" rel="noreferrer" className="floating-whatsapp fixed bottom-24 left-4 z-30 flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] text-[#102016] shadow-[0_10px_30px_rgba(37,211,102,.35)] ring-4 ring-[#25d366]/25 transition-transform hover:scale-110 md:bottom-6 md:left-6" aria-label="פתיחת WhatsApp" data-testid="link-floating-whatsapp"><FaWhatsapp size={34} /></a>
       <BottomBar onLocate={requestLocation} />
-      {locationSheet && <LocationSheet onClose={() => setLocationSheet(false)} />}
+      {locationSheet && <LocationSheet locating={locating} onClose={() => setLocationSheet(false)} />}
     </div>
   );
 }
