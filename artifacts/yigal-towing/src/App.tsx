@@ -164,6 +164,20 @@ function Hero({ onLocate }: { onLocate: () => void }) {
   );
 }
 
+function Poster() {
+  return (
+    <section id="poster" className="border-b border-[#d4d8d9]/15 bg-[#14181b] py-12 md:py-16">
+      <div className="container-wide flex flex-col items-center">
+        <p className="flex items-center gap-3 text-[12px] font-black tracking-[.15em] text-[#f5d84e]"><span className="yellow-rule" /> גרר יגאל</p>
+        <a href={`tel:${phone}`} className="mt-6 block w-full max-w-[520px]" aria-label="חייגו לגרר יגאל" data-testid="link-poster">
+          <img src="/client-work/poster.jpg" alt="גרר יגאל — גורר אופנועים וקטנועים באזור המרכז, גוש דן והשרון. טלפון 052-253-6758" width={1023} height={1537} className="w-full border border-[#d4d8d9]/20 shadow-[0_24px_70px_rgba(0,0,0,.6)]" />
+        </a>
+        <a href={`tel:${phone}`} className="mt-6 flex h-14 w-full max-w-[520px] items-center justify-center gap-3 bg-[#f5d84e] text-[16px] font-black text-[#14181b] transition-transform hover:-translate-y-0.5" data-testid="link-poster-phone"><Phone size={19} /> {phone}</a>
+      </div>
+    </section>
+  );
+}
+
 function QuickAction({ onLocate }: { onLocate: () => void }) {
   return (
     <section className="relative z-10 -mt-1 border-b border-[#14181b] bg-[#f5d84e] text-[#14181b]">
@@ -396,17 +410,6 @@ function Footer() {
   );
 }
 
-function BottomBar({ onLocate }: { onLocate: () => void }) {
-  return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#d4d8d9]/15 bg-[#14181b]/95 p-3 backdrop-blur-md md:hidden" dir="rtl">
-      <div className="grid grid-cols-[1fr_1.35fr] gap-2">
-        <a href={`tel:${phone}`} className="flex h-12 items-center justify-center gap-2 border border-[#d4d8d9]/35 text-sm font-black text-[#f5f3ec]" data-testid="link-bottom-phone"><Phone size={17} /> חייגו</a>
-        <button type="button" onClick={onLocate} className="flex h-12 items-center justify-center gap-2 bg-[#f5d84e] text-sm font-black text-[#14181b]" data-testid="button-bottom-location"><Navigation size={17} /> שלחו מיקום</button>
-      </div>
-    </div>
-  );
-}
-
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locationSheet, setLocationSheet] = useState(false);
@@ -462,8 +465,9 @@ function Home() {
     <div dir="rtl" className="noise min-h-[100dvh] overflow-x-hidden bg-[#14181b] text-[#f5f3ec]">
       <Header onMenu={() => setMenuOpen(true)} />
       {menuOpen && <MobileMenu onClose={() => setMenuOpen(false)} />}
-      <main className="bottom-safe">
+      <main>
         <Hero onLocate={requestLocation} />
+        <Poster />
         <QuickAction onLocate={requestLocation} />
         <ClientWork />
         <Services />
@@ -473,8 +477,7 @@ function Home() {
         <ClosingCTA onLocate={requestLocation} />
       </main>
       <Footer />
-      <a href={whatsappUrl(quickMessage)} target="_blank" rel="noreferrer" className="floating-whatsapp fixed bottom-24 left-4 z-30 flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] text-[#102016] shadow-[0_10px_30px_rgba(37,211,102,.35)] ring-4 ring-[#25d366]/25 transition-transform hover:scale-110 md:bottom-6 md:left-6" aria-label="פתיחת WhatsApp" data-testid="link-floating-whatsapp"><FaWhatsapp size={34} /></a>
-      <BottomBar onLocate={requestLocation} />
+      <a href={whatsappUrl(quickMessage)} target="_blank" rel="noreferrer" className="floating-whatsapp fixed bottom-6 left-4 z-30 flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] text-[#102016] shadow-[0_10px_30px_rgba(37,211,102,.35)] ring-4 ring-[#25d366]/25 transition-transform hover:scale-110 md:bottom-6 md:left-6" aria-label="פתיחת WhatsApp" data-testid="link-floating-whatsapp"><FaWhatsapp size={34} /></a>
       {locationSheet && <LocationSheet locating={locating} onClose={() => setLocationSheet(false)} />}
     </div>
   );
